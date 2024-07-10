@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub'
+        DOCKER_IMAGE = 'nodejs-random-color'
     }
     stages {
         stage('Checkout') {
@@ -12,7 +13,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker build -t nodejs-random-color:ver-${BUILD_ID} .'
+                def imageTag = "${DOCKER_IMAGE}:ver-${BUILD_ID}"
+                env.IMAGE_TAG = imageTag
+                sh 'docker build -t ${imageTag} .'
             }
         }
         
