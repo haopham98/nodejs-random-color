@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    enviroment {
+        DOCKER_CREDENTIALS_ID = 'dockerhub'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -10,6 +13,17 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'docker build -t nodejs-random-color:ver-${BUILD_ID} .'
+            }
+        }
+        
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    // Đăng nhập vào Docker Hub
+                    withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    }
+                }
             }
         }
         stage('Upload image to Dockerhub') {
