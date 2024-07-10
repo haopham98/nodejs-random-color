@@ -15,7 +15,7 @@ pipeline {
             steps {
                 def imageTag = "${DOCKER_IMAGE}:ver-${BUILD_ID}"
                 env.IMAGE_TAG = imageTag
-                sh 'docker build -t ${imageTag} .'
+                sh "docker build -t ${imageTag} ."
             }
         }
         
