@@ -1,11 +1,11 @@
 pipeline {
     agent any
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         git 'https://github.com/hoanglinhdigital/nodejs-random-color.git'
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/haopham98/nodejs-random-color.git'
+            }
+        }
 
         stage('Build') {
             steps {
@@ -19,7 +19,6 @@ pipeline {
                 // sh 'docker push 430950558682.dkr.ecr.ap-southeast-1.amazonaws.com/nodejs-random-color:ver-${BUILD_ID}'
             	docker tag nodejs-random-color:ver-${BUILD_ID} haopham98/nodejs-random-color:ver-${BUILD_ID}
 				docker push haopham98/nodejs-random-color:ver-${BUILD_ID}
-
 			}
         }
     }
