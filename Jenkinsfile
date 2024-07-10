@@ -3,7 +3,6 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub'
         DOCKER_IMAGE = 'nodejs-random-color'
-        IMAGE_TAG = "lastest"
     }
     stages {
         stage('Checkout') {
@@ -14,9 +13,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                def imageTag = "${DOCKER_IMAGE}:ver-${BUILD_ID}"
-                env.IMAGE_TAG = imageTag
-                sh "docker build -t ${imageTag} ."
+                script {
+                    // Tạo tag cho image Docker
+                    def imageTag = "${DOCKER_IMAGE}:ver-${BUILD_ID}"
+                    env.IMAGE_TAG = imageTag
+                    
+                    // Build Docker image
+                    sh "docker build -t ${imageTag} ."
+                }
             }
         }
         
