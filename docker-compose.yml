@@ -9,7 +9,7 @@ services:
     deploy:
       replicas: 3
       restart_policy:
-        condition: always
+        condition: on-failure
     networks:
       - mynetwork
   nginx:
