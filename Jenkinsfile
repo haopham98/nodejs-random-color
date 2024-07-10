@@ -35,5 +35,11 @@ pipeline {
 				sh 'docker push hoanghao98/nodejs-random-color:ver-${BUILD_ID}'
 			}
         }
+
+        stage('Deploy image') {
+            steps {
+                sh 'envsubst < docker-compose.yml | docker-compose -f - up -d'
+            }
+        }
     }
 }
