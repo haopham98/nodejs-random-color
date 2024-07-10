@@ -46,7 +46,9 @@ pipeline {
 
         stage('Deploy image') {
             steps {
-                sh "envsubst < docker-compose.yml | docker-compose -f - up -d"
+                script {
+                    sh "envsubst < docker-compose.yml | docker-compose -f - up -d"
+                }
             }
         }
     }
