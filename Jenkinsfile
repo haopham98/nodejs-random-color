@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub'
         DOCKER_IMAGE = 'nodejs-random-color'
+        IMAGE_TAG = "lastest"
     }
     stages {
         stage('Checkout') {
@@ -41,7 +42,7 @@ pipeline {
 
         stage('Deploy image') {
             steps {
-                sh 'envsubst < docker-compose.yml | docker-compose -f - up -d'
+                sh "envsubst < docker-compose.yml | docker-compose -f - up -d"
             }
         }
     }
